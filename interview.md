@@ -113,8 +113,22 @@
     <summary></summary>
     多个事务各自锁定了一些记录，同时又相互请求对方锁定的记录，互相等待对方释放锁<br/>
     超时释放锁；回滚事务
-
 </details>
+
+## undolog redolog binlog 
+<details> 
+    <summary></summary>
+    redolog:提供数据的恢复功能。MySQL修改数据的时候也是先在内存缓冲区修改数据，这时会将修改操作记录在redolog中，并根据刷盘策略写入到磁盘。在这之后把内存中的数据出问题就可以用redolog恢复数据。<br/>
+    undolog:记录修改操作，提供数据回滚的功能。<br/>
+    binlog:记录了除了查询之外的操作，可以通过binlog（重新执行一遍记录的操作）创建一个备份实例，主要用于主从同步。
+</details>
+
+## mvcc
+<details> 
+    <summary></summary>
+    每条记录使用最后修改事务id、回滚指针和undolog保存了这条记录的版本链，开启一个事务会创建一个读视图（RC、RR两个隔离级别），读视图中规定了能读取到的记录的版本。
+</details>
+
 
 # spring
 ## spring中bean对象是单例还是多例
